@@ -244,10 +244,10 @@ struct DeviceDetailView: View {
         .onAppear {
             loadData()
         }
-        .onChange(of: deviceViewModel) { _ in
+        .onChange(of: deviceViewModel) {
             loadData()
         }
-        .onChange(of: selectedDataType) { _ in
+        .onChange(of: selectedDataType) {
             loadData()
         }
         .toolbar {

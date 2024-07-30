@@ -32,31 +32,25 @@ struct DashboardView: View {
         NavigationSplitView {
             #if os(iOS)
                 List {
-                    Section {
-                        ForEach(filteredDeviceViewModels, id: \.device.id) { viewModel in
-                            Button(action: {
-                                selectedDevice = viewModel
-                            }) {
-                                DeviceCard(viewModel: viewModel)
-                                    .contextMenu {
-                                        Button(action: {
-                                            // Action for editing the device
-                                            selectedDevice = viewModel
-                                            isAddDeviceViewPresented = true
-                                        }) {
-                                            Label("Edit Device", systemImage: "pencil")
-                                        }
-                                        Button(role: .destructive, action: {
-                                            // Action for deleting the device
-                                            if let index = deviceViewModels.firstIndex(where: { $0.device.id == viewModel.device.id }) {
-                                                deviceViewModels.remove(at: index)
-                                            }
-                                        }) {
-                                            Label("Delete", systemImage: "trash")
-                                        }
+                    ForEach(filteredDeviceViewModels, id: \.device.id) { viewModel in
+                        DeviceCard(viewModel: viewModel)
+                            .contextMenu {
+                                Button(action: {
+                                    // Action for editing the device
+                                    selectedDevice = viewModel
+                                    isAddDeviceViewPresented = true
+                                }) {
+                                    Label("Edit Device", systemImage: "pencil")
+                                }
+                                Button(role: .destructive, action: {
+                                    // Action for deleting the device
+                                    if let index = deviceViewModels.firstIndex(where: { $0.device.id == viewModel.device.id }) {
+                                        deviceViewModels.remove(at: index)
                                     }
+                                }) {
+                                    Label("Delete", systemImage: "trash")
+                                }
                             }
-                        }
                     }
                 }
                 .listStyle(SidebarListStyle())
@@ -89,6 +83,7 @@ struct DashboardView: View {
                             await selectedDevice.loadData()
                         }
                     }
+
             } else {
                 VStack {
                     Image(systemName: "drop.circle.fill")
