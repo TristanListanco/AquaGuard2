@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AquaGuard2-Watch Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>AquaGuard2.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>635A7E652C57E21B004BF7A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>635A7E752C57E21C004BF7A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>635A7E7F2C57E21C004BF7A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
