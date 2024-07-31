@@ -31,17 +31,19 @@ struct DashboardView: View {
     var body: some View {
         NavigationSplitView {
             #if os(iOS)
-                List {
+                List(selection: $selectedDevice) {
                     ForEach(filteredDeviceViewModels, id: \.device.id) { viewModel in
                         DeviceCard(viewModel: viewModel)
-                            .contextMenu {
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(action: {
                                     // Action for editing the device
                                     selectedDevice = viewModel
                                     isAddDeviceViewPresented = true
                                 }) {
-                                    Label("Edit Device", systemImage: "pencil")
+                                    Label("Edit", systemImage: "pencil")
                                 }
+                                .tint(.blue)
+
                                 Button(role: .destructive, action: {
                                     // Action for deleting the device
                                     if let index = deviceViewModels.firstIndex(where: { $0.device.id == viewModel.device.id }) {
@@ -50,6 +52,9 @@ struct DashboardView: View {
                                 }) {
                                     Label("Delete", systemImage: "trash")
                                 }
+                            }
+                            .onTapGesture {
+                                selectedDevice = viewModel
                             }
                     }
                 }
@@ -62,13 +67,28 @@ struct DashboardView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
 
-                    List {
+                    List(selection: $selectedDevice) {
                         ForEach(filteredDeviceViewModels, id: \.device.id) { viewModel in
-                            Button(action: {
-                                selectedDevice = viewModel
-                            }) {
-                                DeviceCard(viewModel: viewModel)
-                            }
+                            DeviceCard(viewModel: viewModel)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button(action: {
+                                        // Action for editing the device
+                                        selectedDevice = viewModel
+                                        isAddDeviceViewPresented = true
+                                    }) {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                    .tint(.blue)
+
+                                    Button(role: .destructive, action: {
+                                        // Action for deleting the device
+                                        if let index = deviceViewModels.firstIndex(where: { $0.device.id == viewModel.device.id }) {
+                                            deviceViewModels.remove(at: index)
+                                        }
+                                    }) {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
                         }
                     }
                     .listStyle(SidebarListStyle())
@@ -94,6 +114,7 @@ struct DashboardView: View {
                 }
             }
         }
+        .refreshable {}
         .sheet(isPresented: $isAddDeviceViewPresented) {
             NavigationView {
                 AddDeviceView(isPresented: $isAddDeviceViewPresented, device: $selectedDevice)

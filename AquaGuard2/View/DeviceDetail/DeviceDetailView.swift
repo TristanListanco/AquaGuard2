@@ -46,8 +46,15 @@ struct DeviceDetailView: View {
     @State private var selectedDataRange: DataRange = .daily
     @State private var selectedDeviceData: [SensorValue] = []
     @State private var isFileExporterPresented = false
+    @State private var isTableViewPresented = false
     @State private var fileName: String = "data.csv"
     @State private var isDeviceSettingsPresented = false
+
+    // State variables for the popover
+    @State private var isPopoverPresented = false
+    @State private var newDate = Date()
+    @State private var newTime = Date()
+    @State private var newValue = ""
 
     var averageValue: Double {
         Computations.averageValue(for: selectedDeviceData)
@@ -151,24 +158,21 @@ struct DeviceDetailView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
+                let stats = [
+                    ("Daily Average", dailyAverage),
+                    ("Weekday Average", weekdayAverage),
+                    ("Weekend Average", weekendAverage),
+                    ("Highest Record", highestRecord)
+                ]
+
                 #if os(macOS)
                 Form {
                     Section(header: Text("Statistical Analysis")) {
-                        LabeledContent("Daily Average", value: "\(dailyAverage.formatted()) ppm")
-                            .contentTransition(.numericText())
-                            .animation(.default, value: latestValue)
-
-                        LabeledContent("Weekday Average", value: "\(weekdayAverage.formatted()) ppm")
-                            .contentTransition(.numericText())
-                            .animation(.default, value: latestValue)
-
-                        LabeledContent("Weekend Average", value: "\(weekendAverage.formatted()) ppm")
-                            .contentTransition(.numericText())
-                            .animation(.default, value: latestValue)
-
-                        LabeledContent("Highest Record", value: "\(highestRecord.formatted()) ppm")
-                            .contentTransition(.numericText())
-                            .animation(.default, value: latestValue)
+                        ForEach(stats, id: \.0) { stat in
+                            LabeledContent(stat.0, value: "\(stat.1.formatted()) ppm")
+                                .contentTransition(.numericText())
+                                .fontWeight(.medium)
+                        }
                     }
 
                     Table(selectedDeviceData) {
@@ -189,50 +193,17 @@ struct DeviceDetailView: View {
                     .padding()
                     .animation(.default, value: selectedDeviceData)
                 }
-
                 .formStyle(.grouped)
                 #else
-                GroupBox {
-                    LabeledContent("Daily Average", value: "\(dailyAverage.formatted()) ppm")
-                        .contentTransition(.numericText())
-                        .fontWeight(.medium)
-                }
 
-                GroupBox {
-                    LabeledContent("Weekday Average", value: "\(weekdayAverage.formatted()) ppm")
-                        .contentTransition(.numericText())
-                        .fontWeight(.medium)
-                }
-
-                GroupBox {
-                    LabeledContent("Weekend Average", value: "\(weekendAverage.formatted()) ppm")
-                        .contentTransition(.numericText())
-                        .fontWeight(.medium)
-                }
-
-                GroupBox {
-                    LabeledContent("Highest Record:", value: "\(highestRecord.formatted()) ppm")
-                        .contentTransition(.numericText())
-                        .fontWeight(.medium)
-                }
-
-                Table(selectedDeviceData) {
-                    TableColumn("Date") { element in
-                        Text(element.date, format: .dateTime.month().day().year())
-                            .animation(.default, value: latestValue)
+                Section(header: Text("Statistical Analysis")) {
+                    ForEach(stats, id: \.0) { stat in
+                        LabeledContent(stat.0, value: "\(stat.1.formatted()) ppm")
                             .contentTransition(.numericText())
-                    }
-                    TableColumn("Value") { element in
-                        Text("\(element.value) ppm")
-                            .animation(.default, value: latestValue)
-                            .contentTransition(.numericText())
-                    }
-                    TableColumn("Status") { _ in
-                        Text("NORMAL")
+                            .fontWeight(.medium)
                     }
                 }
-                .padding()
-                .animation(.default, value: selectedDeviceData)
+                .formStyle(.grouped)
 
                 #endif
 
@@ -241,6 +212,7 @@ struct DeviceDetailView: View {
             .padding()
             .navigationTitle(deviceViewModel.device.name)
         }
+        .refreshable {}
         .onAppear {
             loadData()
         }
@@ -252,63 +224,70 @@ struct DeviceDetailView: View {
         }
         .toolbar {
             ToolbarItem {
-                Button {
-                    // Action for the new button
-                    isDeviceSettingsPresented.toggle()
+                Button(action: {
+                    isPopoverPresented.toggle()
+                }) {
+                    Label("Add Data", systemImage: "plus.circle")
+                }
+                .popover(isPresented: $isPopoverPresented) {
+                    addDataPopoverContent
+                }
+            }
 
-                } label: {
-                    Label("Device Settings", systemImage: "wrench.and.screwdriver")
-                }
-            }
-            ToolbarItem {
-                Button {
-                    // Action for the new button
-                    isFileExporterPresented.toggle()
-                } label: {
-                    Label("Device Settings", systemImage: "arrow.down.document")
-                }
-            }
             ToolbarItem {
                 Menu {
-                    Text("View Options")
-                        .font(.footnote)
-                    Divider()
-                    ForEach(DataType.allCases, id: \.self) { type in
-                        Button {
-                            selectedDataType = type
-                            loadData()
-                        } label: {
-                            HStack {
-                                Text(type.rawValue)
-                                Spacer()
-                                if selectedDataType == type {
-                                    Image(systemName: "checkmark")
-                                } else {
-                                    // Add specific icon for each data type
-                                    switch type {
-                                    case .temperature:
-                                        Image(systemName: "thermometer")
-                                    case .pH:
-                                        Image(systemName: "leaf.arrow.circlepath")
-                                    case .tds:
-                                        Image(systemName: "waveform.path.ecg")
-                                    case .waterFlow:
-                                        Image(systemName: "drop.triangle")
-                                    case .ec:
-                                        Image(systemName: "bolt")
-                                    case .turbidity:
-                                        Image(systemName: "cloud.rain")
+                    Button {
+                        // Action for the new button
+                        isFileExporterPresented.toggle()
+                    } label: {
+                        Label("Download Data", systemImage: "arrow.down.document")
+                    }
+                    Button {
+                        // Action for the new button
+                        isDeviceSettingsPresented.toggle()
+
+                    } label: {
+                        Label("Device Settings", systemImage: "wrench.and.screwdriver")
+                    }
+                    Menu("View Options") {
+                        ForEach(DataType.allCases, id: \.self) { type in
+                            Button {
+                                selectedDataType = type
+                                loadData()
+                            } label: {
+                                HStack {
+                                    Text(type.rawValue)
+                                    Spacer()
+                                    if selectedDataType == type {
+                                        Image(systemName: "checkmark")
+                                    } else {
+                                        // Add specific icon for each data type
+                                        switch type {
+                                        case .temperature:
+                                            Image(systemName: "thermometer")
+                                        case .pH:
+                                            Image(systemName: "leaf.arrow.circlepath")
+                                        case .tds:
+                                            Image(systemName: "waveform.path.ecg")
+                                        case .waterFlow:
+                                            Image(systemName: "drop.triangle")
+                                        case .ec:
+                                            Image(systemName: "bolt")
+                                        case .turbidity:
+                                            Image(systemName: "cloud.rain")
+                                        }
                                     }
                                 }
                             }
                         }
+                        Button(role: .destructive) {
+                            // Action for Reset Data
+                        } label: {
+                            Label("Reset Data", systemImage: "trash")
+                        }
                     }
-                    Button(role: .destructive) {
-                        // Action for Reset Data
-                    } label: {
-                        Label("Reset Data", systemImage: "trash")
-                    }
-                } label: {
+                }
+                label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.medium)
                         .font(.system(size: 24))
@@ -324,6 +303,46 @@ struct DeviceDetailView: View {
             case .failure(let error):
                 print("Failed to export file: \(error.localizedDescription)")
             }
+        }
+    }
+
+    private var addDataPopoverContent: some View {
+        NavigationView {
+            Form {
+                Section {
+                    DatePicker("Date", selection: $newDate, displayedComponents: .date)
+                    DatePicker("Time", selection: $newTime, displayedComponents: .hourAndMinute)
+                    TextField("Enter value", text: $newValue)
+                }
+            }
+            .navigationTitle(Text(selectedDataType.rawValue))
+            .navigationBarTitleDisplayMode(.inline) // This sets the navigation bar title to use the inline style
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    isPopoverPresented = false
+                },
+                trailing: Button("Add") {
+                    addData()
+                }
+            )
+        }
+    }
+
+    private func addData() {
+        guard let value = Double(newValue) else { return }
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: newDate)
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: newTime)
+        var combinedComponents = DateComponents()
+        combinedComponents.year = dateComponents.year
+        combinedComponents.month = dateComponents.month
+        combinedComponents.day = dateComponents.day
+        combinedComponents.hour = timeComponents.hour
+        combinedComponents.minute = timeComponents.minute
+
+        if let combinedDate = Calendar.current.date(from: combinedComponents) {
+            let newSensorValue = SensorValue(date: combinedDate, value: value)
+            selectedDeviceData.append(newSensorValue)
+            isPopoverPresented = false
         }
     }
 

@@ -7,7 +7,7 @@
 import Combine
 import Foundation
 
-class DeviceViewModel: ObservableObject, Equatable {
+class DeviceViewModel: ObservableObject, Equatable, Hashable {
     @Published var device: Device
     private var cancellables = Set<AnyCancellable>()
 
@@ -87,9 +87,9 @@ class DeviceViewModel: ObservableObject, Equatable {
     func loadData() async {
         // Fetching dummy data asynchronously
         do {
-            let dummyDevices = await DeveloperPreview.shared.fetchDummyDevices()
-            if let dummyDevice = dummyDevices.first(where: { $0.id == device.id }) {
-                self.device = dummyDevice
+            async let dummyDevices = await DeveloperPreview.shared.dummyDevices();
+            if let dummyDevice = await dummyDevices.first(where: { $0.id == device.id }) {
+                device = dummyDevice
             } else {
                 print("Device with id \(device.id) not found in dummy data")
             }
@@ -98,16 +98,13 @@ class DeviceViewModel: ObservableObject, Equatable {
         }
     }
 
+    // Equatable conformance
     static func == (lhs: DeviceViewModel, rhs: DeviceViewModel) -> Bool {
         return lhs.device.id == rhs.device.id
     }
-}
 
-// Assuming DeveloperPreview has an asynchronous method
-extension DeveloperPreview {
-    func fetchDummyDevices() async -> [Device] {
-        // Simulate an async fetch operation, replace with actual implementation
-        await Task.sleep(1 * 1_000_000_000) // Simulate delay
-        return dummyDevices() // Call the existing synchronous method
+    // Hashable conformance
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(device.id)
     }
 }
