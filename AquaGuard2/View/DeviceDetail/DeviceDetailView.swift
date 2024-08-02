@@ -28,10 +28,10 @@ func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
 enum DataType: String, CaseIterable {
     case temperature = "Temperature"
     case pH
-    case tds = "TDS"
-    case waterFlow = "Water Flow"
-    case ec = "EC"
-    case turbidity = "Turbidity"
+    case TDS
+    case WaterFlow = "Water Flow"
+    case EC
+    case Turbidity
 }
 
 enum DataRange: String, CaseIterable {
@@ -92,105 +92,86 @@ struct DeviceDetailView: View {
     let monitordeviceTip = MonitorData()
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                TipView(monitordeviceTip)
-                Picker("Data Range", selection: $selectedDataRange) {
-                    ForEach(DataRange.allCases, id: \.self) { range in
-                        Text(range.rawValue).tag(range)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.bottom)
-                GroupBox {
-                    VStack(alignment: .leading) {
-                        Text("Latest Data:")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        Text(latestValue, format: .number)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .contentTransition(.numericText())
-                            .animation(.default, value: latestValue)
-                            .fontDesign(.rounded)
-                        Text("TODAY")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Chart(selectedDeviceData) { element in
-                        BarMark(
-                            x: .value("Time", element.date, unit: .day),
-                            y: .value("Value", element.value)
-                        )
-                        .foregroundStyle(.opacity(0.4))
-                        RuleMark(
-                            y: .value("Average", averageValue)
-                        )
-                        .lineStyle(StrokeStyle(lineWidth: 3))
-                        .annotation(position: .top, alignment: .leading) {
-                            Text("Average: \(averageValue, format: .number)")
-                                .font(.footnote)
-                                .fontDesign(.rounded)
-                                .contentTransition(.numericText())
-                                .foregroundStyle(Color.accentColor)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    TipView(monitordeviceTip)
+                    Picker("Data Range", selection: $selectedDataRange) {
+                        ForEach(DataRange.allCases, id: \.self) { range in
+                            Text(range.rawValue).tag(range)
                         }
                     }
-                    .animation(.default, value: selectedDeviceData)
-                    .frame(height: 200)
+                    .pickerStyle(SegmentedPickerStyle())
 
-                    Label {
-                        Text("Latest: \(latestDate)")
-                            .foregroundColor(.white)
-                            .font(.subheadline)
-                        Spacer()
-                        Text("\(latestValue, format: .number) BPM")
-                            .foregroundColor(.white)
-                            .font(.subheadline)
-                            .fontDesign(.rounded)
-                            .fontWeight(.semibold)
+                    GroupBox {
+                        VStack(alignment: .leading) {
+                            Text("Latest Data:")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                            Text(latestValue, format: .number)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .contentTransition(.numericText())
+                                .animation(.default, value: latestValue)
+                                .fontDesign(.rounded)
+                            Text("TODAY")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                    } icon: {}
-                        .padding()
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
+                        Chart(selectedDeviceData) { element in
+                            BarMark(
+                                x: .value("Time", element.date, unit: .day),
+                                y: .value("Value", element.value)
+                            )
+                            .foregroundStyle(.opacity(0.4))
+                            RuleMark(
+                                y: .value("Average", averageValue)
+                            )
+                            .lineStyle(StrokeStyle(lineWidth: 3))
+                            .annotation(position: .top, alignment: .leading) {
+                                Text("Average: \(averageValue, format: .number)")
+                                    .font(.footnote)
+                                    .fontDesign(.rounded)
+                                    .contentTransition(.numericText())
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                        }
+                        .animation(.default, value: selectedDeviceData)
+                        .frame(height: 200)
+
+                        Label {
+                            Text("Latest: \(latestDate)")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                            Spacer()
+                            Text("\(latestValue, format: .number) BPM")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .fontDesign(.rounded)
+                                .fontWeight(.semibold)
+
+                        } icon: {}
+                            .padding()
+                            .background(Color.accentColor)
+                            .cornerRadius(10)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    #if os(macOS)
+
+                    AboutSensorView(selectedDataType: selectedDataType)
+                    #else
+                    AboutSensorView(selectedDataType: selectedDataType)
+
+                    #endif
+
                 }
-
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(UIColor.systemGroupedBackground))
-
-                let stats = [
-                    ("Daily Average", dailyAverage),
-                    ("Weekday Average", weekdayAverage),
-                    ("Weekend Average", weekendAverage),
-                    ("Highest Record", highestRecord)
-                ]
-
-                #if os(macOS)
-                AboutSensorView(selectedDataType: selectedDataType)
-                #else
-                AboutSensorView(selectedDataType: selectedDataType)
-
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Show All Data")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-
-                    ShowAllDataView()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                }
-
-                .padding(.horizontal, 20)
-
-                #endif
-
-                Spacer()
+                .padding()
+                .navigationTitle(deviceViewModel.device.name)
             }
-            .padding()
-            .navigationTitle(deviceViewModel.device.name)
         }
+
         .refreshable {}
         .onAppear {
             loadData()
@@ -254,13 +235,13 @@ struct DeviceDetailView: View {
                                             Image(systemName: "thermometer")
                                         case .pH:
                                             Image(systemName: "leaf.arrow.circlepath")
-                                        case .tds:
+                                        case .TDS:
                                             Image(systemName: "waveform.path.ecg")
-                                        case .waterFlow:
+                                        case .WaterFlow:
                                             Image(systemName: "drop.triangle")
-                                        case .ec:
+                                        case .EC:
                                             Image(systemName: "bolt")
-                                        case .turbidity:
+                                        case .Turbidity:
                                             Image(systemName: "cloud.rain")
                                         }
                                     }
@@ -290,7 +271,6 @@ struct DeviceDetailView: View {
                 print("Failed to export file: \(error.localizedDescription)")
             }
         }
-        .background(Color(UIColor.systemGroupedBackground))
     }
 
     // popover
@@ -319,13 +299,13 @@ struct DeviceDetailView: View {
                 selectedDeviceData = deviceViewModel.device.temperatureData
             case .pH:
                 selectedDeviceData = deviceViewModel.device.pHData
-            case .tds:
+            case .TDS:
                 selectedDeviceData = deviceViewModel.device.tdsData
-            case .waterFlow:
+            case .WaterFlow:
                 selectedDeviceData = deviceViewModel.device.waterFlowData
-            case .ec:
+            case .EC:
                 selectedDeviceData = deviceViewModel.device.ecData
-            case .turbidity:
+            case .Turbidity:
                 selectedDeviceData = deviceViewModel.device.turbidityData
             }
         }
@@ -370,7 +350,7 @@ struct DeviceDetailView: View {
         status: .online,
         temperatureData: [
             SensorValue(date: date(2023, 5, 2), value: 74),
-            SensorValue(date: date(2023, 5, 3), value: 62),
+            SensorValue(date: date(2023, 5, 3), value: 73),
             SensorValue(date: date(2023, 5, 4), value: 74),
             SensorValue(date: date(2023, 5, 5), value: 78),
             SensorValue(date: date(2023, 5, 6), value: 72)

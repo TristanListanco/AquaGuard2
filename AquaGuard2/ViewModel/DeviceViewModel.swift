@@ -85,16 +85,13 @@ class DeviceViewModel: ObservableObject, Equatable, Hashable {
 
     // Load data method with Swift Concurrency
     func loadData() async {
-        // Fetching dummy data asynchronously
-        do {
-            async let dummyDevices = await DeveloperPreview.shared.dummyDevices();
-            if let dummyDevice = await dummyDevices.first(where: { $0.id == device.id }) {
-                device = dummyDevice
-            } else {
-                print("Device with id \(device.id) not found in dummy data")
-            }
-        } catch {
-            print("Error loading device data: \(error.localizedDescription)")
+        // Fetching dummy data
+        let dummyDevices = DeveloperPreview.shared.dummyDevices()
+
+        if let dummyDevice = dummyDevices.first(where: { $0.id == device.id }) {
+            device = dummyDevice
+        } else {
+            print("Device with id \(device.id) not found in dummy data")
         }
     }
 

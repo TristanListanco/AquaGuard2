@@ -6,6 +6,12 @@
 	objectVersion = 70;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		63CC6E9E2C5CEB0000720D77 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9D2C5CEB0000720D77 /* WidgetKit.framework */; };
+		63CC6EA02C5CEB0000720D77 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9F2C5CEB0000720D77 /* SwiftUI.framework */; };
+		63CC6EB12C5CEB0200720D77 /* AquaGuard-WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 63CC6E9B2C5CEB0000720D77 /* AquaGuard-WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		635A7E772C57E21C004BF7A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,6 +27,13 @@
 			remoteGlobalIDString = 635A7E652C57E21B004BF7A3;
 			remoteInfo = AquaGuard2;
 		};
+		63CC6EAF2C5CEB0200720D77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 635A7E5E2C57E21B004BF7A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63CC6E9A2C5CEB0000720D77;
+			remoteInfo = "AquaGuard-WidgetsExtension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,18 +47,55 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63CC6EB62C5CEB0200720D77 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				63CC6EB12C5CEB0200720D77 /* AquaGuard-WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		635A7E662C57E21B004BF7A3 /* AquaGuard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AquaGuard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635A7E762C57E21C004BF7A3 /* AquaGuard2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AquaGuard2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635A7E802C57E21C004BF7A3 /* AquaGuard2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AquaGuard2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63CC6E9B2C5CEB0000720D77 /* AquaGuard-WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AquaGuard-WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63CC6E9D2C5CEB0000720D77 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		63CC6E9F2C5CEB0000720D77 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		63CC6EBD2C5D26FA00720D77 /* AquaGuard-WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AquaGuard-WidgetsExtension.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		63CC6EB22C5CEB0200720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 63CC6E9A2C5CEB0000720D77 /* AquaGuard-WidgetsExtension */;
+		};
+		63CC6EB82C5D25AF00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/Device.swift,
+				Model/UserProfileModel.swift,
+				Other/DeveloperPreview.swift,
+				ViewModel/DeviceViewModel.swift,
+				ViewModel/UserProfileViewModel.swift,
+			);
+			target = 63CC6E9A2C5CEB0000720D77 /* AquaGuard-WidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		635A7E682C57E21B004BF7A3 /* AquaGuard2 */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2; sourceTree = "<group>"; };
+		635A7E682C57E21B004BF7A3 /* AquaGuard2 */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (63CC6EB82C5D25AF00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2; sourceTree = "<group>"; };
 		635A7E792C57E21C004BF7A3 /* AquaGuard2Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2Tests; sourceTree = "<group>"; };
 		635A7E832C57E21C004BF7A3 /* AquaGuard2UITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2UITests; sourceTree = "<group>"; };
+		63CC6EA12C5CEB0000720D77 /* AquaGuard-Widgets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (63CC6EB22C5CEB0200720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "AquaGuard-Widgets"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,15 +120,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63CC6E982C5CEB0000720D77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63CC6EA02C5CEB0000720D77 /* SwiftUI.framework in Frameworks */,
+				63CC6E9E2C5CEB0000720D77 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		635A7E5D2C57E21B004BF7A3 = {
 			isa = PBXGroup;
 			children = (
+				63CC6EBD2C5D26FA00720D77 /* AquaGuard-WidgetsExtension.entitlements */,
 				635A7E682C57E21B004BF7A3 /* AquaGuard2 */,
 				635A7E792C57E21C004BF7A3 /* AquaGuard2Tests */,
 				635A7E832C57E21C004BF7A3 /* AquaGuard2UITests */,
+				63CC6EA12C5CEB0000720D77 /* AquaGuard-Widgets */,
+				63CC6E9C2C5CEB0000720D77 /* Frameworks */,
 				635A7E672C57E21B004BF7A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,8 +151,18 @@
 				635A7E662C57E21B004BF7A3 /* AquaGuard2.app */,
 				635A7E762C57E21C004BF7A3 /* AquaGuard2Tests.xctest */,
 				635A7E802C57E21C004BF7A3 /* AquaGuard2UITests.xctest */,
+				63CC6E9B2C5CEB0000720D77 /* AquaGuard-WidgetsExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		63CC6E9C2C5CEB0000720D77 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63CC6E9D2C5CEB0000720D77 /* WidgetKit.framework */,
+				63CC6E9F2C5CEB0000720D77 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,10 +176,12 @@
 				635A7E632C57E21B004BF7A3 /* Frameworks */,
 				635A7E642C57E21B004BF7A3 /* Resources */,
 				631BD15B2C588CFB00BAA436 /* Embed Watch Content */,
+				63CC6EB62C5CEB0200720D77 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				63CC6EB02C5CEB0200720D77 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				635A7E682C57E21B004BF7A3 /* AquaGuard2 */,
@@ -165,6 +239,28 @@
 			productReference = 635A7E802C57E21C004BF7A3 /* AquaGuard2UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		63CC6E9A2C5CEB0000720D77 /* AquaGuard-WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63CC6EB32C5CEB0200720D77 /* Build configuration list for PBXNativeTarget "AquaGuard-WidgetsExtension" */;
+			buildPhases = (
+				63CC6E972C5CEB0000720D77 /* Sources */,
+				63CC6E982C5CEB0000720D77 /* Frameworks */,
+				63CC6E992C5CEB0000720D77 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				63CC6EA12C5CEB0000720D77 /* AquaGuard-Widgets */,
+			);
+			name = "AquaGuard-WidgetsExtension";
+			packageProductDependencies = (
+			);
+			productName = "AquaGuard-WidgetsExtension";
+			productReference = 63CC6E9B2C5CEB0000720D77 /* AquaGuard-WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -186,6 +282,9 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 635A7E652C57E21B004BF7A3;
 					};
+					63CC6E9A2C5CEB0000720D77 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 				};
 			};
 			buildConfigurationList = 635A7E612C57E21B004BF7A3 /* Build configuration list for PBXProject "AquaGuard2" */;
@@ -204,6 +303,7 @@
 				635A7E652C57E21B004BF7A3 /* AquaGuard2 */,
 				635A7E752C57E21C004BF7A3 /* AquaGuard2Tests */,
 				635A7E7F2C57E21C004BF7A3 /* AquaGuard2UITests */,
+				63CC6E9A2C5CEB0000720D77 /* AquaGuard-WidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -224,6 +324,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		635A7E7E2C57E21C004BF7A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63CC6E992C5CEB0000720D77 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,6 +361,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63CC6E972C5CEB0000720D77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -266,6 +380,11 @@
 			isa = PBXTargetDependency;
 			target = 635A7E652C57E21B004BF7A3 /* AquaGuard2 */;
 			targetProxy = 635A7E812C57E21C004BF7A3 /* PBXContainerItemProxy */;
+		};
+		63CC6EB02C5CEB0200720D77 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63CC6E9A2C5CEB0000720D77 /* AquaGuard-WidgetsExtension */;
+			targetProxy = 63CC6EAF2C5CEB0200720D77 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -394,6 +513,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AquaGuard2/AquaGuard2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AquaGuard2/Preview Content\"";
@@ -430,6 +550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AquaGuard2/AquaGuard2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AquaGuard2/Preview Content\"";
@@ -533,6 +654,64 @@
 			};
 			name = Release;
 		};
+		63CC6EB42C5CEB0200720D77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "AquaGuard-WidgetsExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NSA2PC5U28;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AquaGuard-Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "AquaGuard-Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tristanlistanco.AquaGuard2.AquaGuard-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63CC6EB52C5CEB0200720D77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "AquaGuard-WidgetsExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NSA2PC5U28;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AquaGuard-Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "AquaGuard-Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tristanlistanco.AquaGuard2.AquaGuard-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -568,6 +747,15 @@
 			buildConfigurations = (
 				635A7E912C57E21C004BF7A3 /* Debug */,
 				635A7E922C57E21C004BF7A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63CC6EB32C5CEB0200720D77 /* Build configuration list for PBXNativeTarget "AquaGuard-WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63CC6EB42C5CEB0200720D77 /* Debug */,
+				63CC6EB52C5CEB0200720D77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

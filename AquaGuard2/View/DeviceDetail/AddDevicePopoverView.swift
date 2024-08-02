@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 struct AddDataPopoverView: View {
     @Binding var isPopoverPresented: Bool
     @Binding var newDate: Date
@@ -23,8 +24,8 @@ struct AddDataPopoverView: View {
                     TextField("Enter value", text: $newValue)
                 }
             }
-            .navigationTitle("Add Data") // Adjust as needed
-            .navigationBarTitleDisplayMode(.inline) // This sets the navigation bar title to use the inline style
+            .navigationTitle("Add Data")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button("Cancel") {
                     isPopoverPresented = false
@@ -36,3 +37,36 @@ struct AddDataPopoverView: View {
         }
     }
 }
+
+#elseif os(macOS)
+struct AddDataPopoverView: View {
+    @Binding var isPopoverPresented: Bool
+    @Binding var newDate: Date
+    @Binding var newTime: Date
+    @Binding var newValue: String
+    var addDataAction: () -> Void
+
+    var body: some View {
+        Form {
+            Section("Add Data") {
+                DatePicker("Date", selection: $newDate, displayedComponents: .date)
+                DatePicker("Time", selection: $newTime, displayedComponents: .hourAndMinute)
+                TextField("Enter value", text: $newValue)
+            }
+        }
+        .padding()
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    isPopoverPresented = false
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Add") {
+                    addDataAction()
+                }
+            }
+        }
+    }
+}
+#endif

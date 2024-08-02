@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct AboutSensorView: View {
     var selectedDataType: DataType // Define a variable to hold the DataType
 
@@ -16,14 +15,11 @@ struct AboutSensorView: View {
             Text("About \(selectedDataType.rawValue.capitalized)")
                 .font(.title2)
                 .fontWeight(.semibold)
-
-            Text("Step count is the number of steps you take throughout the day. Pedometers and digital activity trackers can help you determine your step count. These devices count steps for any activity that involves step-like movement, including walking, running, stair-climbing, cross-country skiing, and even movement as you go about your daily chores.")
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(UIColor.systemBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+            GroupBox {
+                Text("Step count is the number of steps you take throughout the day. Pedometers and digital activity trackers can help you determine your step count. These devices count steps for any activity that involves step-like movement, including walking, running, stair-climbing, cross-country skiing, and even movement as you go about your daily chores.")
+                    .font(.subheadline)
+            }
         }
-        .padding(.horizontal, 20)
     }
 }
 
