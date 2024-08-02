@@ -9,7 +9,16 @@ import SwiftUI
 
 struct ShowAllDataView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            NavigationLink(destination: Text("All Data View")) {
+                Text("Show All Data")
+            }
+            NavigationLink(destination: Text("Data Sources & Access View")) {
+                Text("Data Sources & Access")
+            }
+        }
+        .navigationTitle("Settings")
+        .listStyle(GroupedListStyle()) //
     }
 }
 

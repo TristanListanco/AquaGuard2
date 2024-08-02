@@ -156,7 +156,9 @@ struct DeviceDetailView: View {
                         .background(Color.accentColor)
                         .cornerRadius(10)
                 }
+
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(UIColor.systemGroupedBackground))
 
                 let stats = [
                     ("Daily Average", dailyAverage),
@@ -166,44 +168,21 @@ struct DeviceDetailView: View {
                 ]
 
                 #if os(macOS)
-                Form {
-                    Section(header: Text("Statistical Analysis")) {
-                        ForEach(stats, id: \.0) { stat in
-                            LabeledContent(stat.0, value: "\(stat.1.formatted()) ppm")
-                                .contentTransition(.numericText())
-                                .fontWeight(.medium)
-                        }
-                    }
-
-                    Table(selectedDeviceData) {
-                        TableColumn("Date") { element in
-                            Text(element.date, format: .dateTime.month().day().year())
-                                .animation(.default, value: latestValue)
-                                .contentTransition(.numericText())
-                        }
-                        TableColumn("Value") { element in
-                            Text("\(element.value) ppm")
-                                .animation(.default, value: latestValue)
-                                .contentTransition(.numericText())
-                        }
-                        TableColumn("Status") { _ in
-                            Text("NORMAL")
-                        }
-                    }
-                    .padding()
-                    .animation(.default, value: selectedDeviceData)
-                }
-                .formStyle(.grouped)
+                AboutSensorView(selectedDataType: selectedDataType)
                 #else
+                AboutSensorView(selectedDataType: selectedDataType)
 
-                Section(header: Text("Statistical Analysis")) {
-                    ForEach(stats, id: \.0) { stat in
-                        LabeledContent(stat.0, value: "\(stat.1.formatted()) ppm")
-                            .contentTransition(.numericText())
-                            .fontWeight(.medium)
-                    }
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Show All Data")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+
+                    ShowAllDataView()
+                        .frame(maxWidth: .infinity)
+                        .padding()
                 }
-                .formStyle(.grouped)
+
+                .padding(.horizontal, 20)
 
                 #endif
 
@@ -230,10 +209,17 @@ struct DeviceDetailView: View {
                     Label("Add Data", systemImage: "plus.circle")
                 }
                 .popover(isPresented: $isPopoverPresented) {
-                    addDataPopoverContent
+                    AddDataPopoverView(
+                        isPopoverPresented: $isPopoverPresented,
+                        newDate: $newDate,
+                        newTime: $newTime,
+                        newValue: $newValue,
+                        addDataAction: {
+                            addData()
+                        }
+                    )
                 }
             }
-
             ToolbarItem {
                 Menu {
                     Button {
@@ -244,6 +230,7 @@ struct DeviceDetailView: View {
                     }
                     Button {
                         // Action for the new button
+
                         isDeviceSettingsPresented.toggle()
 
                     } label: {
@@ -293,7 +280,6 @@ struct DeviceDetailView: View {
                         .font(.system(size: 24))
                 }
             }
-            // Add another ToolbarItem here
         }
 
         .fileExporter(isPresented: $isFileExporterPresented, document: createDocument(), contentType: .plainText, defaultFilename: fileName) { result in
@@ -304,30 +290,10 @@ struct DeviceDetailView: View {
                 print("Failed to export file: \(error.localizedDescription)")
             }
         }
+        .background(Color(UIColor.systemGroupedBackground))
     }
 
-    private var addDataPopoverContent: some View {
-        NavigationView {
-            Form {
-                Section {
-                    DatePicker("Date", selection: $newDate, displayedComponents: .date)
-                    DatePicker("Time", selection: $newTime, displayedComponents: .hourAndMinute)
-                    TextField("Enter value", text: $newValue)
-                }
-            }
-            .navigationTitle(Text(selectedDataType.rawValue))
-            .navigationBarTitleDisplayMode(.inline) // This sets the navigation bar title to use the inline style
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    isPopoverPresented = false
-                },
-                trailing: Button("Add") {
-                    addData()
-                }
-            )
-        }
-    }
-
+    // popover
     private func addData() {
         guard let value = Double(newValue) else { return }
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: newDate)
@@ -405,7 +371,7 @@ struct DeviceDetailView: View {
         temperatureData: [
             SensorValue(date: date(2023, 5, 2), value: 74),
             SensorValue(date: date(2023, 5, 3), value: 62),
-            SensorValue(date: date(2023, 5, 4), value: 40),
+            SensorValue(date: date(2023, 5, 4), value: 74),
             SensorValue(date: date(2023, 5, 5), value: 78),
             SensorValue(date: date(2023, 5, 6), value: 72)
         ],
