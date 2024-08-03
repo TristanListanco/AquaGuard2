@@ -104,6 +104,7 @@ struct AquaGuard_WidgetsEntryView: View {
                             Text(entry.deviceLocation) // Assuming location is also the device name for now
                                 .font(.system(size: 10, weight: .semibold, design: .default))
                                 .foregroundColor(.white)
+                                .privacySensitive(true)
                                 .opacity(0.6)
                         }
                     }
