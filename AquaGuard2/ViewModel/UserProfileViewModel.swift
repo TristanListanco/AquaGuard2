@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 class UserProfileViewModel: ObservableObject {
     @Published var userProfile: UserProfile
@@ -17,30 +18,37 @@ class UserProfileViewModel: ObservableObject {
     // Update user profile properties
     func updateName(_ newName: String) {
         userProfile.name = newName
+        reloadWidget()
     }
 
     func updateEmail(_ newEmail: String) {
         userProfile.email = newEmail
+        reloadWidget()
     }
 
     func updateAddress(_ newAddress: String) {
         userProfile.address = newAddress
+        reloadWidget()
     }
 
     func updateNumberOfDevices(_ newNumberOfDevices: Int) {
         userProfile.numberOfDevices = newNumberOfDevices
+        reloadWidget()
     }
 
     func updatePassword(_ newPassword: String) {
         userProfile.password = newPassword
+        reloadWidget()
     }
 
     func updateHobbies(_ newHobbies: [String]) {
         userProfile.hobbies = newHobbies
+        reloadWidget()
     }
 
     func updateOwnerImageUrl(_ newOwnerImageUrl: String) {
         userProfile.ownerImageUrl = newOwnerImageUrl
+        reloadWidget()
     }
 
     // Update devices
@@ -48,6 +56,7 @@ class UserProfileViewModel: ObservableObject {
         await MainActor.run {
             userProfile.devices.append(device)
             userProfile.numberOfDevices = userProfile.devices.count
+            reloadWidget()
         }
     }
 
@@ -55,6 +64,7 @@ class UserProfileViewModel: ObservableObject {
         if let index = userProfile.devices.firstIndex(where: { $0.id == updatedDevice.id }) {
             await MainActor.run {
                 userProfile.devices[index] = updatedDevice
+                reloadWidget()
             }
         }
     }
@@ -63,6 +73,13 @@ class UserProfileViewModel: ObservableObject {
         await MainActor.run {
             userProfile.devices.removeAll { $0.id == id }
             userProfile.numberOfDevices = userProfile.devices.count
+            reloadWidget()
+        }
+    }
+
+    func reloadWidget() {
+        DispatchQueue.main.async {
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 
@@ -88,6 +105,7 @@ class UserProfileViewModel: ObservableObject {
                 if let turbidityData = turbidityData {
                     userProfile.devices[index].turbidityData = turbidityData
                 }
+                reloadWidget()
             }
         }
     }

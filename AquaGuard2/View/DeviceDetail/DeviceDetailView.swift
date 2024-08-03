@@ -165,7 +165,6 @@ struct DeviceDetailView: View {
                     AboutSensorView(selectedDataType: selectedDataType)
 
                     #endif
-
                 }
                 .padding()
                 .navigationTitle(deviceViewModel.device.name)
@@ -236,23 +235,23 @@ struct DeviceDetailView: View {
                                         case .pH:
                                             Image(systemName: "leaf.arrow.circlepath")
                                         case .TDS:
-                                            Image(systemName: "waveform.path.ecg")
+                                            Image(systemName: "circle.hexagongrid")
                                         case .WaterFlow:
-                                            Image(systemName: "drop.triangle")
+                                            Image(systemName: "water.waves.and.arrow.trianglehead.up")
                                         case .EC:
                                             Image(systemName: "bolt")
                                         case .Turbidity:
-                                            Image(systemName: "cloud.rain")
+                                            Image(systemName: "atom")
                                         }
                                     }
                                 }
                             }
                         }
-                        Button(role: .destructive) {
-                            // Action for Reset Data
-                        } label: {
-                            Label("Reset Data", systemImage: "trash")
-                        }
+                    }
+                    Button(role: .destructive) {
+                        // Action for Reset Data
+                    } label: {
+                        Label("Reset Data", systemImage: "trash")
                     }
                 }
                 label: {
