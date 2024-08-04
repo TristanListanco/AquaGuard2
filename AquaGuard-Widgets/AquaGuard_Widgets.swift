@@ -220,7 +220,7 @@ struct AquaGuard_WidgetsEntryView: View {
         case .temperature:
             return "Temperature"
         case .pH:
-            return "pH Level"
+            return "pH"
         case .TDS:
             return "TDS"
         case .waterFlow:

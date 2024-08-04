@@ -5,14 +5,16 @@
 //  Created by Tristan Listanco on 8/4/24.
 //
 
-import WidgetKit
 import AppIntents
+import WidgetKit
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource { "Configuration" }
-    static var description: IntentDescription { "This is an example widget." }
+    static var title: LocalizedStringResource { "Water Quality Monitoring" }
+    static var description: IntentDescription { "Select a device and sensor type to display its data." }
 
-    // An example configurable parameter.
-    @Parameter(title: "Favorite Emoji", default: "😃")
-    var favoriteEmoji: String
+    @Parameter(title: "Device", default: "Device 1")
+    var selectedDevice: String
+
+    @Parameter(title: "Sensor Type", default: "pH")
+    var selectedSensorType: String
 }
