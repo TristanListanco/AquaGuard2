@@ -16,9 +16,11 @@ struct DeviceCard: View {
                 Text(viewModel.device.name)
                     .font(.headline)
                     .fontWeight(.bold)
+                    
 
                 Label(viewModel.device.location, systemImage: "location.fill")
                     .font(.footnote)
+                    .privacySensitive()
             }
             .padding()
             .cornerRadius(4)
