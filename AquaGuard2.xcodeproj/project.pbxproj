@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6319911A2C5F522E00EE882B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9D2C5CEB0000720D77 /* WidgetKit.framework */; };
+		6319911B2C5F522E00EE882B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9F2C5CEB0000720D77 /* SwiftUI.framework */; };
+		631991262C5F523000EE882B /* AquaGuard-Watch-WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 631991192C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		63CC6E9E2C5CEB0000720D77 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9D2C5CEB0000720D77 /* WidgetKit.framework */; };
 		63CC6EA02C5CEB0000720D77 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC6E9F2C5CEB0000720D77 /* SwiftUI.framework */; };
 		63CC6EB12C5CEB0200720D77 /* AquaGuard-WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 63CC6E9B2C5CEB0000720D77 /* AquaGuard-WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -14,6 +17,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		631991242C5F523000EE882B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 635A7E5E2C57E21B004BF7A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 631991182C5F522E00EE882B;
+			remoteInfo = "AquaGuard-Watch-WidgetExtension";
+		};
 		635A7E772C57E21C004BF7A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 635A7E5E2C57E21B004BF7A3 /* Project object */;
@@ -59,6 +69,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		6319912B2C5F523000EE882B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				631991262C5F523000EE882B /* AquaGuard-Watch-WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		631BD15B2C588CFB00BAA436 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -84,6 +105,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		631991192C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AquaGuard-Watch-WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		635A7E662C57E21B004BF7A3 /* AquaGuard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AquaGuard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635A7E762C57E21C004BF7A3 /* AquaGuard2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AquaGuard2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635A7E802C57E21C004BF7A3 /* AquaGuard2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AquaGuard2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +119,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6319912A2C5F523000EE882B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 631991182C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension */;
+		};
 		63CC6EB22C5CEB0200720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -134,10 +163,22 @@
 			);
 			target = 63CC6EC82C5E529900720D77 /* AquaGuard-Watch Watch App */;
 		};
+		63D6AED42C5FAF02008EC92F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/Device.swift,
+				Model/UserProfileModel.swift,
+				Other/DeveloperPreview.swift,
+				ViewModel/DeviceViewModel.swift,
+				ViewModel/UserProfileViewModel.swift,
+			);
+			target = 631991182C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		635A7E682C57E21B004BF7A3 /* AquaGuard2 */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (63CC6EB82C5D25AF00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 63CC6EF72C5E52ED00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2; sourceTree = "<group>"; };
+		6319911C2C5F522E00EE882B /* AquaGuard-Watch-Widget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6319912A2C5F523000EE882B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "AquaGuard-Watch-Widget"; sourceTree = "<group>"; };
+		635A7E682C57E21B004BF7A3 /* AquaGuard2 */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (63CC6EB82C5D25AF00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 63CC6EF72C5E52ED00720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 63D6AED42C5FAF02008EC92F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2; sourceTree = "<group>"; };
 		635A7E792C57E21C004BF7A3 /* AquaGuard2Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2Tests; sourceTree = "<group>"; };
 		635A7E832C57E21C004BF7A3 /* AquaGuard2UITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AquaGuard2UITests; sourceTree = "<group>"; };
 		63CC6EA12C5CEB0000720D77 /* AquaGuard-Widgets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (63CC6EC42C5DB1A500720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 63CC6EB22C5CEB0200720D77 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "AquaGuard-Widgets"; sourceTree = "<group>"; };
@@ -147,6 +188,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		631991162C5F522E00EE882B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6319911B2C5F522E00EE882B /* SwiftUI.framework in Frameworks */,
+				6319911A2C5F522E00EE882B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		635A7E632C57E21B004BF7A3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -212,6 +262,7 @@
 				63CC6ECA2C5E529900720D77 /* AquaGuard-Watch Watch App */,
 				63CC6EDB2C5E529C00720D77 /* AquaGuard-Watch Watch AppTests */,
 				63CC6EE52C5E529C00720D77 /* AquaGuard-Watch Watch AppUITests */,
+				6319911C2C5F522E00EE882B /* AquaGuard-Watch-Widget */,
 				63CC6E9C2C5CEB0000720D77 /* Frameworks */,
 				635A7E672C57E21B004BF7A3 /* Products */,
 			);
@@ -227,6 +278,7 @@
 				63CC6EC92C5E529900720D77 /* AquaGuard-Watch Watch App.app */,
 				63CC6ED82C5E529B00720D77 /* AquaGuard-Watch Watch AppTests.xctest */,
 				63CC6EE22C5E529C00720D77 /* AquaGuard-Watch Watch AppUITests.xctest */,
+				631991192C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -243,6 +295,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		631991182C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 631991272C5F523000EE882B /* Build configuration list for PBXNativeTarget "AquaGuard-Watch-WidgetExtension" */;
+			buildPhases = (
+				631991152C5F522E00EE882B /* Sources */,
+				631991162C5F522E00EE882B /* Frameworks */,
+				631991172C5F522E00EE882B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6319911C2C5F522E00EE882B /* AquaGuard-Watch-Widget */,
+			);
+			name = "AquaGuard-Watch-WidgetExtension";
+			packageProductDependencies = (
+			);
+			productName = "AquaGuard-Watch-WidgetExtension";
+			productReference = 631991192C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		635A7E652C57E21B004BF7A3 /* AquaGuard2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 635A7E8A2C57E21C004BF7A3 /* Build configuration list for PBXNativeTarget "AquaGuard2" */;
@@ -344,10 +418,12 @@
 				63CC6EC52C5E529900720D77 /* Sources */,
 				63CC6EC62C5E529900720D77 /* Frameworks */,
 				63CC6EC72C5E529900720D77 /* Resources */,
+				6319912B2C5F523000EE882B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				631991252C5F523000EE882B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				63CC6ECA2C5E529900720D77 /* AquaGuard-Watch Watch App */,
@@ -415,6 +491,9 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					631991182C5F522E00EE882B = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					635A7E652C57E21B004BF7A3 = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -462,11 +541,19 @@
 				63CC6EC82C5E529900720D77 /* AquaGuard-Watch Watch App */,
 				63CC6ED72C5E529B00720D77 /* AquaGuard-Watch Watch AppTests */,
 				63CC6EE12C5E529C00720D77 /* AquaGuard-Watch Watch AppUITests */,
+				631991182C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		631991172C5F522E00EE882B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		635A7E642C57E21B004BF7A3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -519,6 +606,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		631991152C5F522E00EE882B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		635A7E622C57E21B004BF7A3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -571,6 +665,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		631991252C5F523000EE882B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 631991182C5F522E00EE882B /* AquaGuard-Watch-WidgetExtension */;
+			targetProxy = 631991242C5F523000EE882B /* PBXContainerItemProxy */;
+		};
 		635A7E782C57E21C004BF7A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 635A7E652C57E21B004BF7A3 /* AquaGuard2 */;
@@ -604,6 +703,66 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		631991282C5F523000EE882B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NSA2PC5U28;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AquaGuard-Watch-Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "AquaGuard-Watch-Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tristanlistanco.AquaGuard2.watchkitapp.AquaGuard-Watch-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		631991292C5F523000EE882B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NSA2PC5U28;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AquaGuard-Watch-Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "AquaGuard-Watch-Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tristanlistanco.AquaGuard2.watchkitapp.AquaGuard-Watch-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
 		635A7E882C57E21C004BF7A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1068,6 +1227,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		631991272C5F523000EE882B /* Build configuration list for PBXNativeTarget "AquaGuard-Watch-WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				631991282C5F523000EE882B /* Debug */,
+				631991292C5F523000EE882B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		635A7E612C57E21B004BF7A3 /* Build configuration list for PBXProject "AquaGuard2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

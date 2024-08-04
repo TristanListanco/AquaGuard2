@@ -123,9 +123,7 @@ struct AquaGuard_WidgetsEntryView: View {
                         .chartXAxis {
                             AxisMarks(stroke: StrokeStyle(lineWidth: 0)) // Hides X axis
                         }
-                        .chartYAxis {
-                            AxisMarks(stroke: StrokeStyle(lineWidth: 0))
-                        }
+                        .chartYAxis(.hidden)
                         .background(Color.clear) // Optional: Clear background
                         .animation(.default, value: entry.selectedDeviceData)
                         Spacer()
@@ -241,7 +239,17 @@ struct AquaGuard_Widgets: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
             AquaGuard_WidgetsEntryView(entry: entry)
-                .containerBackground(LinearGradient(gradient: Gradient(colors: [Color(red: 94/255, green: 218/255, blue: 245/255), Color.accentColor]), startPoint: .top, endPoint: .bottom), for: .widget)
+                .containerBackground(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color(.systemCyan), // #32ADE6
+                            Color(.systemBlue) // #007AFF
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ),
+                    for: .widget
+                )
         }
         .configurationDisplayName("Select a Widget")
         .description("Monitor water quality and environmental data with AquaGuard")

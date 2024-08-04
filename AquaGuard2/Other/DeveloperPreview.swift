@@ -109,8 +109,8 @@ class DeveloperPreview {
     // Helper method to generate sensor values
     private func generateSensorValues(startingValue: Double, increment: Double) -> [SensorValue] {
         var values: [SensorValue] = []
-        let startDate = date(2023, 1, 1)
-        for i in 0 ..< 7 {
+        let startDate = date(2024, 1, 1)
+        for i in 0 ..< 10 {
             let value = SensorValue(date: Calendar.current.date(byAdding: .day, value: i, to: startDate)!, value: startingValue + (increment * Double(i)))
             values.append(value)
         }
