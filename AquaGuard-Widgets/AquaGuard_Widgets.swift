@@ -89,70 +89,147 @@ struct AquaGuard_WidgetsEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
 
     var body: some View {
-        ZStack {
+        switch widgetFamily {
+        case .systemSmall:
+            // View for small widgets
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: "location.fill")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .foregroundColor(.white)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(entry.configuration.selectedDevice)
+
+                        Text(entry.deviceLocation) // Assuming location is also the device name for now
+                            .privacySensitive(true)
+                            .font(.system(size: 10, weight: .semibold, design: .default))
+                    }
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                    .foregroundColor(.white)
+                }
+                Spacer()
+                HStack {
+                    if let latestValue = entry.selectedDeviceData.last {
+                        Text("\(latestValue.value, specifier: "%.2f") \(unit(for: entry.sensorType))")
+
+                    } else {
+                        Text("No data")
+                    }
+                    Spacer()
+                }
+                .font(.title)
+                .foregroundStyle(.primary)
+                .fontDesign(.rounded)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                HStack {
+                    getIconForSensorType(entry.sensorType.rawValue)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .foregroundColor(.white)
+
+                    Text(sensorTypeName(for: entry.sensorType))
+                }
+                .font(.footnote)
+                .fontDesign(.rounded)
+                .fontWeight(.semibold)
+                .foregroundStyle(.tertiary)
+                .foregroundColor(.white)
+            }
+
+        case .systemMedium:
+            // View for medium widgets
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Image(systemName: "location.fill")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                             .foregroundColor(.white)
-                            .opacity(0.6)
                         VStack(alignment: .leading, spacing: 0) {
                             Text(entry.configuration.selectedDevice)
-                                .font(.system(size: 14, weight: .semibold, design: .default))
-                                .foregroundColor(.white)
-                                .opacity(0.6)
+
                             Text(entry.deviceLocation) // Assuming location is also the device name for now
-                                .font(.system(size: 10, weight: .semibold, design: .default))
-                                .foregroundColor(.white)
                                 .privacySensitive(true)
-                                .opacity(0.6)
                         }
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+                        .foregroundColor(.white)
                     }
                     Spacer()
-                    if widgetFamily == .systemLarge {
-                        // Chart view for medium widgets
-                        Chart(entry.selectedDeviceData) { element in
-                            BarMark(
-                                x: .value("Time", element.date, unit: .day),
-                                y: .value("Value", element.value)
-                            )
-                            .foregroundStyle(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .opacity(0.7)
-                        }
-                        .chartXAxis {
-                            AxisMarks(stroke: StrokeStyle(lineWidth: 0)) // Hides X axis
-                        }
-                        .chartYAxis(.hidden)
-                        .background(Color.clear) // Optional: Clear background
-                        .animation(.default, value: entry.selectedDeviceData)
-                        Spacer()
-                    }
                     HStack {
                         if let latestValue = entry.selectedDeviceData.last {
-                            Text("\(latestValue.value, specifier: "%.2f")")
-                                .font(.system(size: 36, weight: .medium, design: .rounded))
-                                .foregroundColor(.white)
+                            Text("\(latestValue.value, specifier: "%.2f") \(unit(for: entry.sensorType))")
+
                         } else {
                             Text("No data")
-                                .font(.system(size: 30, weight: .medium, design: .rounded))
-                                .foregroundColor(.white)
                         }
                         Spacer()
                     }
+                    .font(.title)
+                    .foregroundStyle(.primary)
+                    .fontDesign(.rounded)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
                     HStack {
                         getIconForSensorType(entry.sensorType.rawValue)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                             .foregroundColor(.white)
-                            .opacity(0.6)
+
                         Text(sensorTypeName(for: entry.sensorType))
-                            .font(.system(size: 10, weight: .bold, design: .default))
-                            .foregroundColor(.white)
-                            .opacity(0.6)
                     }
+                    .font(.footnote)
+                    .fontDesign(.rounded)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.tertiary)
+                    .foregroundColor(.white)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures full use of space
-                if widgetFamily == .systemMedium {
-                    // Chart view for medium widgets
+                // Chart view for medium widgets
+                Chart(entry.selectedDeviceData) { element in
+                    BarMark(
+                        x: .value("Time", element.date, unit: .day),
+                        y: .value("Value", element.value)
+                    )
+                    .foregroundStyle(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+                .chartXAxis {
+                    AxisMarks(stroke: StrokeStyle(lineWidth: 0)) // Hides X axis
+                }
+                .foregroundStyle(.secondary)
+                .chartYAxis(.hidden)
+                .background(Color.clear) // Optional: Clear background
+                .animation(.default, value: entry.selectedDeviceData)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+
+        case .systemLarge:
+            // View for large widgets
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: "location.fill")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .foregroundColor(.white)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(entry.configuration.selectedDevice)
+
+                        Text(entry.deviceLocation) // Assuming location is also the device name for now
+                            .privacySensitive(true)
+                    }
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                    .foregroundColor(.white)
+                }
+                Spacer()
+                if widgetFamily == .systemLarge {
+                    // Chart view for large widgets
                     Chart(entry.selectedDeviceData) { element in
                         BarMark(
                             x: .value("Time", element.date, unit: .day),
@@ -160,76 +237,104 @@ struct AquaGuard_WidgetsEntryView: View {
                         )
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .opacity(0.7)
                     }
                     .chartXAxis {
                         AxisMarks(stroke: StrokeStyle(lineWidth: 0)) // Hides X axis
                     }
-                    .chartYAxis {
-                        AxisMarks(stroke: StrokeStyle(lineWidth: 0))
-                    }
+                    .foregroundStyle(.secondary)
+                    .chartYAxis(.hidden)
                     .background(Color.clear) // Optional: Clear background
                     .animation(.default, value: entry.selectedDeviceData)
+                    Spacer()
                 }
+                HStack {
+                    if let latestValue = entry.selectedDeviceData.last {
+                        Text("\(latestValue.value, specifier: "%.2f") \(unit(for: entry.sensorType))")
+
+                    } else {
+                        Text("No data")
+                    }
+                    Spacer()
+                }
+                .font(.title)
+                .foregroundStyle(.primary)
+                .fontDesign(.rounded)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                HStack {
+                    getIconForSensorType(entry.sensorType.rawValue)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .foregroundColor(.white)
+
+                    Text(sensorTypeName(for: entry.sensorType))
+                }
+                .font(.footnote)
+                .fontDesign(.rounded)
+                .fontWeight(.semibold)
+                .foregroundStyle(.tertiary)
+                .foregroundColor(.white)
             }
-        }
-        .edgesIgnoringSafeArea(.all)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .widgetURL(URL(string: "your-url-here")) // Optional: Handle tap to open URL
-    }
+            .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures full use of space
+            .clipShape(RoundedRectangle(cornerRadius: 12))
 
-    @ViewBuilder
-    private func getIconForSensorType(_ sensorType: String) -> some View {
-        switch SensorType(rawValue: sensorType) {
-        case .temperature:
-            Image(systemName: "thermometer")
-        case .pH:
-            Image(systemName: "leaf.arrow.circlepath")
-        case .TDS:
-            Image(systemName: "circle.hexagongrid")
-        case .waterFlow:
-            Image(systemName: "water.waves.and.arrow.trianglehead.up")
-        case .EC:
-            Image(systemName: "bolt")
-        case .turbidity:
-            Image(systemName: "atom")
         default:
-            Image(systemName: "questionmark")
+            EmptyView()
         }
     }
+}
 
-    private func unit(for sensorType: SensorType) -> String {
-        switch sensorType {
-        case .temperature:
-            return "°C"
-        case .pH:
-            return "pH"
-        case .TDS:
-            return "ppm"
-        case .waterFlow:
-            return "L/min"
-        case .EC:
-            return "µS/cm"
-        case .turbidity:
-            return "NTU"
-        }
+@ViewBuilder
+private func getIconForSensorType(_ sensorType: String) -> some View {
+    switch SensorType(rawValue: sensorType) {
+    case .temperature:
+        Image(systemName: "thermometer")
+    case .pH:
+        Image(systemName: "leaf.arrow.circlepath")
+    case .TDS:
+        Image(systemName: "circle.hexagongrid")
+    case .waterFlow:
+        Image(systemName: "water.waves.and.arrow.trianglehead.up")
+    case .EC:
+        Image(systemName: "bolt")
+    case .turbidity:
+        Image(systemName: "atom")
+    default:
+        Image(systemName: "questionmark")
     }
+}
 
-    private func sensorTypeName(for sensorType: SensorType) -> String {
-        switch sensorType {
-        case .temperature:
-            return "Temperature"
-        case .pH:
-            return "pH"
-        case .TDS:
-            return "TDS"
-        case .waterFlow:
-            return "Water Flow"
-        case .EC:
-            return "Electrical Conductivity"
-        case .turbidity:
-            return "Turbidity"
-        }
+private func unit(for sensorType: SensorType) -> String {
+    switch sensorType {
+    case .temperature:
+        return "°C"
+    case .pH:
+        return "pH"
+    case .TDS:
+        return "ppm"
+    case .waterFlow:
+        return "L/min"
+    case .EC:
+        return "µS/cm"
+    case .turbidity:
+        return "NTU"
+    }
+}
+
+private func sensorTypeName(for sensorType: SensorType) -> String {
+    switch sensorType {
+    case .temperature:
+        return "Temperature"
+    case .pH:
+        return "pH"
+    case .TDS:
+        return "TDS"
+    case .waterFlow:
+        return "Water Flow"
+    case .EC:
+        return "Electrical Conductivity"
+    case .turbidity:
+        return "Turbidity"
     }
 }
 
@@ -253,6 +358,7 @@ struct AquaGuard_Widgets: Widget {
         }
         .configurationDisplayName("Select a Widget")
         .description("Monitor water quality and environmental data with AquaGuard")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryCircular])
     }
 }
 

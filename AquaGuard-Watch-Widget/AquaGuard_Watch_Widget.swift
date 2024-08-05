@@ -190,6 +190,7 @@ struct AquaGuard_Watch_Widget: Widget {
                     for: .widget
                 )
         }
+        .supportedFamilies([.accessoryRectangular , .accessoryCircular])
     }
 }
 
