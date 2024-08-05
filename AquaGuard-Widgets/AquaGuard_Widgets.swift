@@ -90,6 +90,76 @@ struct AquaGuard_WidgetsEntryView: View {
 
     var body: some View {
         switch widgetFamily {
+        case .accessoryCircular:
+            if let latestValue = entry.selectedDeviceData.last {
+                // Calculate min and max values from selectedDeviceData
+                let minValue = entry.selectedDeviceData.map { $0.value }.min() ?? 0
+                let maxValue = entry.selectedDeviceData.map { $0.value }.max() ?? 1 // Ensure max is not zero to avoid division errors
+
+                Gauge(value: Double(latestValue.value), in: minValue ... maxValue) {
+                    // Use the getIconForSensorType method directly
+                    getIconForSensorType(entry.sensorType.rawValue)
+
+                } currentValueLabel: {
+                    Text("\(latestValue.value, specifier: "%.1f")")
+                }
+                .gaugeStyle(.accessoryCircular)
+
+            } else {
+                Gauge(value: 0) {
+                    Text("--")
+                }
+                .gaugeStyle(.accessoryCircular)
+            }
+
+        case .accessoryRectangular:
+            if let latestValue = entry.selectedDeviceData.last {
+                VStack(alignment: .leading) {
+                    // Location icon at the top
+                    HStack {
+                        Image(systemName: "location.fill")
+                            .font(.footnote)
+                        Text(entry.configuration.selectedDevice)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .privacySensitive()
+                    }
+
+                    // Chart view for medium widgets
+                    Chart(entry.selectedDeviceData) { element in
+                        BarMark(
+                            x: .value("Time", element.date, unit: .day),
+                            y: .value("Value", element.value)
+                        )
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    }
+                    .chartXAxis {
+                        AxisMarks(stroke: StrokeStyle(lineWidth: 0)) // Hides X axis
+                    }
+                    .foregroundStyle(.secondary)
+                    .chartYAxis(.hidden)
+                    .background(Color.clear) // Optional: Clear background
+                }
+
+                .widgetLabel {
+                    // Description of the widget, shown in the system's widget gallery
+                    Text("Device Sensor Data Trend")
+                }
+            } else {
+                VStack {
+                    Image(systemName: "location.fill")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    Text("No Data Available")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .widgetLabel {
+                    Text("No Sensor Data")
+                }
+            }
+
         case .systemSmall:
             // View for small widgets
             VStack(alignment: .leading) {
@@ -358,21 +428,21 @@ struct AquaGuard_Widgets: Widget {
         }
         .configurationDisplayName("Select a Widget")
         .description("Monitor water quality and environmental data with AquaGuard")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryCircular])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryCircular, .accessoryInline, .accessoryRectangular])
     }
 }
 
 private extension ConfigurationAppIntent {
     static var device1pH: ConfigurationAppIntent {
         let intent = ConfigurationAppIntent()
-        intent.selectedDevice = "Device 1"
+        intent.selectedDevice = "Listanco's Residence"
         intent.selectedSensorType = "pH"
         return intent
     }
 
     static var device2Conductivity: ConfigurationAppIntent {
         let intent = ConfigurationAppIntent()
-        intent.selectedDevice = "Device 1"
+        intent.selectedDevice = "CCS Residence"
         intent.selectedSensorType = "pH"
         return intent
     }
